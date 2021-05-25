@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "382160310216",
+    "project_id": "nerocoffee-1efab",
+    "storage_bucket": "nerocoffee-1efab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382160310216:android:d8395f5ef61b89311afafd",
+        "android_client_info": {
+          "package_name": "com.example.nerocoffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382160310216-o0us6oknlebb87cmgo6subukbe9p3o31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nerocoffee",
+            "certificate_hash": "2c2b407b7bae9cf0df47cf34af1adf9ce0c4ec2e"
+          }
+        },
+        {
+          "client_id": "382160310216-i78d1gc4qbikm0829smt3jucapkvgrfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAu9wzR1-RdhU1y1GDyHL3mNBOwVU1gxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382160310216-i78d1gc4qbikm0829smt3jucapkvgrfj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
