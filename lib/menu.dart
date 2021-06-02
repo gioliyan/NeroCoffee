@@ -33,7 +33,7 @@ class Menu extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Ceremonies'),
+              title: Text('List Member'),
               onTap: () {
                 // Update the state of the app
                 // ...
@@ -42,25 +42,7 @@ class Menu extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Problems'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Glossary'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Pop Quiz!'),
+              title: Text('List Menu'),
               onTap: () {
                 // Update the state of the app
                 // ...
