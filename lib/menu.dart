@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nerocoffee/loginpage.dart';
 import 'package:nerocoffee/signin.dart';
+import 'login.dart';
 
 class Menu extends StatelessWidget {
   @override
@@ -20,7 +21,7 @@ class Menu extends StatelessWidget {
             DrawerHeader(
               child: Text('Drawer Header'),
               decoration: BoxDecoration(
-                color: Colors.blueGrey,
+                color: Colors.indigo,
               ),
             ),
             ListTile(
@@ -56,7 +57,7 @@ class Menu extends StatelessWidget {
                 signOutGoogle();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) {
-                  return LoginPage();
+                  return LoginPage2();
                 }), ModalRoute.withName('/'));
               },
             ),

@@ -71,7 +71,7 @@ class _LoginPage extends State<LoginPage2> {
                               margin: EdgeInsets.only(top: 50),
                               child: Center(
                                 child: Text(
-                                  "Login",
+                                  "Nero Coffe",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 40,
@@ -109,6 +109,7 @@ class _LoginPage extends State<LoginPage2> {
                                           bottom: BorderSide(
                                               color: Colors.grey[100]))),
                                   child: TextField(
+                                    controller: emailController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: "Email",
@@ -119,6 +120,8 @@ class _LoginPage extends State<LoginPage2> {
                                 Container(
                                   padding: EdgeInsets.all(8.0),
                                   child: TextField(
+                                    obscureText: true,
+                                    controller: passwordController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: "Password",
@@ -135,22 +138,55 @@ class _LoginPage extends State<LoginPage2> {
                       FadeAnimation(
                           2,
                           Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                gradient: LinearGradient(colors: [
-                                  Color.fromRGBO(143, 148, 251, 1),
-                                  Color.fromRGBO(143, 148, 251, .6),
-                                ])),
-                            child: Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                            margin: EdgeInsets.all(10),
+                            child: OutlineButton(
+                              splashColor: Colors.grey,
+                              onPressed: () {
+                                signInEmail(emailController.text,
+                                        passwordController.text)
+                                    .then((result) {
+                                  if (result != null) {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return Menu();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                });
+                              },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40)),
+                              highlightElevation: 0,
+                              borderSide: BorderSide(color: Colors.indigo),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 5, right: 5),
+                                      child: Text(
+                                        'Sign in',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.indigo,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _signInButton(),
                       SizedBox(
                         height: 70,
                       ),
@@ -161,5 +197,47 @@ class _LoginPage extends State<LoginPage2> {
             ),
           ),
         ));
+  }
+
+  Widget _signInButton() {
+    return OutlineButton(
+      splashColor: Colors.grey,
+      onPressed: () {
+        signInWithGoogle().then((result) {
+          if (result != null) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return Menu();
+                },
+              ),
+            );
+          }
+        });
+      },
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      highlightElevation: 0,
+      borderSide: BorderSide(color: Colors.indigo),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            //Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.indigo,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
