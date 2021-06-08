@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:nerocoffee/loginpage.dart';
-import 'package:nerocoffee/signin.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'login.dart';
+import 'package:nerocoffee/signin.dart';
+import 'menu.dart';
 import 'listmember.dart';
-import 'listmenu.dart';
 
-class Menu extends StatelessWidget {
+class MenuList extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  ListMenu createState() => ListMenu();
+}
+
+class ListMenu extends State<MenuList> {
+  @override
+  Widget build(BuildContext) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nero Coffe"),
+        title: Text('List Menu'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -83,32 +88,6 @@ class Menu extends StatelessWidget {
               },
             ),
           ],
-        ),
-      ),
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              SizedBox(height: 20),
-              Text(
-                'EMAIL',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
-              Text(
-                email,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 40),
-            ],
-          ),
         ),
       ),
     );
