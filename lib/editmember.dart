@@ -75,7 +75,6 @@ class _CrtMember extends State<EditMember> {
             height: 30,
           ),
           Container(
-            width: 310,
             child: Column(
               children: [
                 Padding(
@@ -88,7 +87,9 @@ class _CrtMember extends State<EditMember> {
                       });
                     },
                     decoration: InputDecoration(
-                      icon: Icon(Icons.perm_identity_sharp),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                       hintText: "Name",
                     ),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -104,7 +105,9 @@ class _CrtMember extends State<EditMember> {
                       });
                     },
                     decoration: InputDecoration(
-                      icon: Icon(Icons.mail_sharp),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                       hintText: "Email",
                     ),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -120,7 +123,9 @@ class _CrtMember extends State<EditMember> {
                       });
                     },
                     decoration: InputDecoration(
-                      icon: Icon(Icons.phone_android),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                       hintText: "Phone Number",
                     ),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -136,7 +141,9 @@ class _CrtMember extends State<EditMember> {
                       });
                     },
                     decoration: InputDecoration(
-                      icon: Icon(Icons.location_on),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                       hintText: "Address",
                     ),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),

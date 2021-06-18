@@ -29,7 +29,7 @@ class Menu extends StatelessWidget {
                           margin: EdgeInsets.all(15),
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(
-                                'https://i.pinimg.com/736x/1e/1c/3e/1e1c3e4adbd53afaa0b7f2f999c46887.jpg'),
+                                'https://images.unsplash.com/photo-1595434091143-b375ced5fe5c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
                             radius: 30,
                           ),
                         )

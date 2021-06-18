@@ -1,45 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nerocoffee/listmenu.dart';
 import 'login.dart';
 import 'package:nerocoffee/signin.dart';
 import 'menu.dart';
 import 'listmember.dart';
-import 'package:flutter/material.dart';
+import 'listmenu.dart';
 
-class CreateMember extends StatefulWidget {
-  CreateMember({this.email});
-  final String email;
+class EditMenu extends StatefulWidget {
+  EditMenu({this.nmmenu, this.price, this.index});
+  final String nmmenu;
+  final String price;
+  final index;
   @override
-  _CrtMember createState() => new _CrtMember();
+  _CrtMenu createState() => new _CrtMenu();
 }
 
-class _CrtMember extends State<CreateMember> {
-  String name = '';
-  String emailmember = '';
-  String phonenumber = '';
-  String address = '';
+class _CrtMenu extends State<EditMenu> {
+  TextEditingController nameMenuController;
+  TextEditingController priceController;
 
-  void _addMember() {
+  String nmmenu = '';
+  String price = '';
+
+  void _editMenu() {
     FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
-      CollectionReference _user =
-          FirebaseFirestore.instance.collection('member');
-      await _user.add({
+      DocumentSnapshot snapshot = await transaction.get(widget.index);
+      await transaction.update(snapshot.reference, {
         "email": email,
-        "name": name,
-        "emailmember": emailmember,
-        "phonenumber": phonenumber,
-        "address": address,
+        "name_menu": nmmenu,
+        "price": price,
       });
     });
-    MaterialPageRoute route = MaterialPageRoute(builder: (_) => Member());
+    MaterialPageRoute route = MaterialPageRoute(builder: (_) => MenuList());
     Navigator.push(context, route);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    nmmenu = widget.nmmenu;
+    price = widget.price;
+
+    nameMenuController = TextEditingController(text: widget.nmmenu);
+    priceController = TextEditingController(text: widget.price);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Member'),
+        title: Text('Edit Menu'),
       ),
       body: Column(
         children: [
@@ -52,16 +64,17 @@ class _CrtMember extends State<CreateMember> {
                 Padding(
                   padding: EdgeInsets.all(10.0),
                   child: TextField(
+                    controller: nameMenuController,
                     onChanged: (String str) {
                       setState(() {
-                        name = str;
+                        nmmenu = str;
                       });
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-                      hintText: "Name",
+                      hintText: "Name Menu",
                     ),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),
                   ),
@@ -69,51 +82,17 @@ class _CrtMember extends State<CreateMember> {
                 Padding(
                   padding: EdgeInsets.all(10.0),
                   child: TextField(
+                    controller: priceController,
                     onChanged: (String str) {
                       setState(() {
-                        emailmember = str;
+                        price = str;
                       });
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-                      hintText: "Email",
-                    ),
-                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (String str) {
-                      setState(() {
-                        phonenumber = str;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      hintText: "Phone Number",
-                    ),
-                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: TextField(
-                    onChanged: (String str) {
-                      setState(() {
-                        address = str;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      hintText: "Address",
+                      hintText: "Price",
                     ),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),
                   ),
@@ -129,7 +108,7 @@ class _CrtMember extends State<CreateMember> {
                 IconButton(
                   icon: Icon(Icons.check, size: 40.0),
                   onPressed: () {
-                    _addMember();
+                    _editMenu();
                   },
                 ),
                 IconButton(

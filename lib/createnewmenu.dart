@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nerocoffee/listmenu.dart';
 import 'login.dart';
 import 'package:nerocoffee/signin.dart';
 import 'menu.dart';
 import 'listmember.dart';
-import 'package:flutter/material.dart';
+import 'listmenu.dart';
 
-class CreateMember extends StatefulWidget {
-  CreateMember({this.email});
+class CreateMenu extends StatefulWidget {
+  CreateMenu({this.email});
   final String email;
   @override
-  _CrtMember createState() => new _CrtMember();
+  _CrtMenu createState() => new _CrtMenu();
 }
 
-class _CrtMember extends State<CreateMember> {
-  String name = '';
-  String emailmember = '';
-  String phonenumber = '';
-  String address = '';
+class _CrtMenu extends State<CreateMenu> {
+  String nmmenu = '';
+  String price = '';
 
-  void _addMember() {
+  void _addMenu() {
     FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
-      CollectionReference _user =
-          FirebaseFirestore.instance.collection('member');
+      CollectionReference _user = FirebaseFirestore.instance.collection('menu');
       await _user.add({
         "email": email,
-        "name": name,
-        "emailmember": emailmember,
-        "phonenumber": phonenumber,
-        "address": address,
+        "name_menu": nmmenu,
+        "price": price,
       });
     });
-    MaterialPageRoute route = MaterialPageRoute(builder: (_) => Member());
+    MaterialPageRoute route = MaterialPageRoute(builder: (_) => MenuList());
     Navigator.push(context, route);
   }
 
@@ -39,7 +35,7 @@ class _CrtMember extends State<CreateMember> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Member'),
+        title: Text('Create New Menu'),
       ),
       body: Column(
         children: [
@@ -54,14 +50,14 @@ class _CrtMember extends State<CreateMember> {
                   child: TextField(
                     onChanged: (String str) {
                       setState(() {
-                        name = str;
+                        nmmenu = str;
                       });
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-                      hintText: "Name",
+                      hintText: "Name Menu",
                     ),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),
                   ),
@@ -71,49 +67,14 @@ class _CrtMember extends State<CreateMember> {
                   child: TextField(
                     onChanged: (String str) {
                       setState(() {
-                        emailmember = str;
+                        price = str;
                       });
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-                      hintText: "Email",
-                    ),
-                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (String str) {
-                      setState(() {
-                        phonenumber = str;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      hintText: "Phone Number",
-                    ),
-                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: TextField(
-                    onChanged: (String str) {
-                      setState(() {
-                        address = str;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      hintText: "Address",
+                      hintText: "Price",
                     ),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),
                   ),
@@ -129,7 +90,7 @@ class _CrtMember extends State<CreateMember> {
                 IconButton(
                   icon: Icon(Icons.check, size: 40.0),
                   onPressed: () {
-                    _addMember();
+                    _addMenu();
                   },
                 ),
                 IconButton(

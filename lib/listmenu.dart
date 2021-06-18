@@ -4,6 +4,8 @@ import 'login.dart';
 import 'package:nerocoffee/signin.dart';
 import 'menu.dart';
 import 'listmember.dart';
+import 'createnewmenu.dart';
+import 'editmenu.dart';
 
 class MenuList extends StatefulWidget {
   @override
@@ -12,7 +14,7 @@ class MenuList extends StatefulWidget {
 
 class ListMenu extends State<MenuList> {
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('List Menu'),
@@ -34,7 +36,7 @@ class ListMenu extends State<MenuList> {
                           margin: EdgeInsets.all(15),
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(
-                                'https://i.pinimg.com/736x/1e/1c/3e/1e1c3e4adbd53afaa0b7f2f999c46887.jpg'),
+                                'https://images.unsplash.com/photo-1595434091143-b375ced5fe5c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
                             radius: 30,
                           ),
                         )
@@ -90,6 +92,120 @@ class ListMenu extends State<MenuList> {
           ],
         ),
       ),
+      body: Stack(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(15),
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("menu")
+                  //.where("email", isEqualTo: email)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData)
+                  return new Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                return new DrinkMenu(document: snapshot.data.docs);
+              },
+            ),
+          ),
+          Container(
+            alignment: Alignment.bottomRight,
+            margin: EdgeInsets.all(10),
+            width: double.infinity,
+            child: FloatingActionButton(
+              child: Icon(Icons.add),
+              backgroundColor: Colors.indigo,
+              onPressed: () {
+                MaterialPageRoute route =
+                    MaterialPageRoute(builder: (_) => CreateMenu());
+                Navigator.push(context, route);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DrinkMenu extends StatelessWidget {
+  DrinkMenu({this.document});
+  final List<DocumentSnapshot> document;
+  @override
+  Widget build(BuildContext context) {
+    return new ListView.builder(
+      itemCount: document.length,
+      itemBuilder: (BuildContext context, int i) {
+        String nameMenu = document[i].data()['name_menu'].toString();
+        String price = document[i].data()['price'].toString();
+        return Dismissible(
+          key: Key(document[i].id),
+          onDismissed: (direction) {
+            FirebaseFirestore.instance.runTransaction((transaction) async {
+              DocumentSnapshot snapshot =
+                  await transaction.get(document[i].reference);
+              await transaction.delete(snapshot.reference);
+            });
+
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Complete Delete Member"),
+              ),
+            );
+          },
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                    child: Container(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          nameMenu,
+                          style: TextStyle(fontSize: 15, letterSpacing: 1.0),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: Icon(Icons.monetization_on_outlined),
+                            ),
+                            Text(
+                              price,
+                              style:
+                                  TextStyle(fontSize: 15, letterSpacing: 1.0),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+                IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      MaterialPageRoute route = MaterialPageRoute(
+                          builder: (_) => EditMenu(
+                                nmmenu: nameMenu,
+                                price: price,
+                                index: document[i].reference,
+                              ));
+                      Navigator.push(context, route);
+                    })
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
